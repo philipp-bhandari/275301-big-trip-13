@@ -9,7 +9,7 @@ import {generateEvent} from "./mock/trip-event.js";
 
 const TRIP_COUNT = 15;
 
-const event = new Array(TRIP_COUNT).fill().map(generateEvent);
+const events = new Array(TRIP_COUNT).fill().map(generateEvent);
 
 const render = (container, template, place) => {
   container.insertAdjacentHTML(place, template);
@@ -28,9 +28,9 @@ render(tripMenuElement, createTripControls(), `beforeend`);
 render(tripMenuElement, createTripFilter(), `beforeend`);
 render(tripEventsContent, createTripSort(), `afterbegin`);
 render(tripEventsList, createNewPointTemplate(), `afterbegin`);
-render(tripEventsList, createEditPointTemplate(), `beforeend`);
+render(tripEventsList, createEditPointTemplate(events[0]), `beforeend`);
 
 for (let i = 1; i < TRIP_COUNT; i++) {
-  render(tripEventsList, createTripElement(event[i]), `beforeend`);
+  render(tripEventsList, createTripElement(events[i]), `beforeend`);
 }
 

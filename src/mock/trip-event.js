@@ -1,10 +1,9 @@
-import dayjs from "dayjs";
+import {getRandomInteger} from "../utils/helpers";
 
-const getRandomInteger = (a = 0, b = 1) => {
-  const lower = Math.ceil(Math.min(a, b));
-  const upper = Math.floor(Math.max(a, b));
-
-  return Math.floor(lower + Math.random() * (upper - lower + 1));
+const generateDate = () => {
+  return (
+    Date.now() + 1 + Math.floor(Math.random() * 7) * 24 * getRandomInteger(0, 60) * 60 * 1000
+  );
 };
 
 const generateEventType = () => {
@@ -39,17 +38,6 @@ const generateCities = () => {
   const randomIndex = getRandomInteger(0, cities.length - 1);
   return cities[randomIndex];
 };
-
-const generateDate = () => {
-  const maxHoursGap = 24;
-  const hours = getRandomInteger(1, maxHoursGap);
-
-  const hoursStart = dayjs().add(hours, `hour`).toDate();
-  const hoursEnd = dayjs().add(hours, `hour`).toDate();
-
-  return {hoursStart, hoursEnd};
-};
-
 
 const generateOffers = () => {
   const offers = [
@@ -94,10 +82,13 @@ const generateDescription = () => {
 };
 
 export const generateEvent = () => {
+  const timeStart = generateDate();
+  const timeEnd = generateDate();
   return {
     type: generateEventType(),
     city: generateCities(),
-    time: generateDate(),
+    timeStart: Math.min(timeStart, timeEnd),
+    timeEnd: Math.max(timeStart, timeEnd),
     price: getRandomInteger(10, 200),
     offers: generateOffers(),
     destination: {
