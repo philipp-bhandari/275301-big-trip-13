@@ -30,7 +30,5 @@ render(tripEventsContent, createTripSort(), `afterbegin`);
 render(tripEventsList, createNewPointTemplate(), `afterbegin`);
 render(tripEventsList, createEditPointTemplate(events[0]), `beforeend`);
 
-for (let i = 1; i < TRIP_COUNT; i++) {
-  render(tripEventsList, createTripElement(events[i]), `beforeend`);
-}
+events.forEach((point) => render(tripEventsList, createTripElement(point), `beforeend`));
 
