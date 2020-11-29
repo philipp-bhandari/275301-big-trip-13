@@ -5,8 +5,11 @@ import {createNewPointTemplate} from "./view/add-point.js";
 import {createEditPointTemplate} from "./view/edit-point.js";
 import {createTripFilter} from "./view/trip-filter.js";
 import {createTripElement} from "./view/trip-list.js";
+import {generateEvent} from "./mock/trip-event.js";
 
-const TRIP_COUNT = 3;
+const TRIP_COUNT = 15;
+
+const events = new Array(TRIP_COUNT).fill().map(generateEvent);
 
 const render = (container, template, place) => {
   container.insertAdjacentHTML(place, template);
@@ -25,9 +28,7 @@ render(tripMenuElement, createTripControls(), `beforeend`);
 render(tripMenuElement, createTripFilter(), `beforeend`);
 render(tripEventsContent, createTripSort(), `afterbegin`);
 render(tripEventsList, createNewPointTemplate(), `afterbegin`);
-render(tripEventsList, createEditPointTemplate(), `beforeend`);
+render(tripEventsList, createEditPointTemplate(events[0]), `beforeend`);
 
-for (let i = 0; i < TRIP_COUNT; i++) {
-  render(tripEventsList, createTripElement(), `beforeend`);
-}
+events.forEach((point) => render(tripEventsList, createTripElement(point), `beforeend`));
 
