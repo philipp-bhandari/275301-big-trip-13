@@ -1,8 +1,9 @@
 import dayjs from "dayjs";
+import {createElement} from "../utils/helpers.js";
 
-export const createEditPointTemplate = (point) => {
+const createEditPointTemplate = (editPoint = {}) => {
 
-  const {type, city, timeStart, timeEnd, price, destination} = point;
+  const {type, city, timeStart, timeEnd, price, destination} = editPoint;
 
   return `<li class="trip-events__item">
               <form class="event event--edit" action="#" method="post">
@@ -165,3 +166,26 @@ export const createEditPointTemplate = (point) => {
               </form>
             </li>`;
 };
+
+export default class EditPointView {
+  constructor(editPoint) {
+    this._editPoint = editPoint;
+    this._element = null;
+  }
+
+  getTemplate() {
+    return createEditPointTemplate(this._editPoint);
+  }
+
+  getElement() {
+    if (!this._element) {
+      this._element = createElement(this.getTemplate());
+    }
+
+    return this._element;
+  }
+
+  removeElement() {
+    this._element = null;
+  }
+}

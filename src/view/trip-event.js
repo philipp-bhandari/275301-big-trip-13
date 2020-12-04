@@ -1,6 +1,7 @@
 import dayjs from "dayjs";
+import {createElement} from "../utils/helpers";
 
-export const createTripElement = (point) => {
+const createTripElement = (point) => {
   const {type, city, timeStart, timeEnd, price, offers, isFavorite} = point;
   const timeGap = dayjs(timeEnd).toDate() - dayjs(timeStart).toDate();
 
@@ -46,3 +47,26 @@ export const createTripElement = (point) => {
               </div>
             </li>`;
 };
+
+export default class TripEventView {
+  constructor(point) {
+    this._point = point;
+    this._element = null;
+  }
+
+  getTemplate() {
+    return createTripElement(this._point);
+  }
+
+  getElement() {
+    if (!this._element) {
+      this._element = createElement(this.getTemplate());
+    }
+
+    return this._element;
+  }
+
+  removeElement() {
+    this._element = null;
+  }
+}

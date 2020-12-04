@@ -30,3 +30,4 @@ export const generateEvent = () => {
     isFavorite: Boolean(getRandomInteger(0, 1)),
   };
 };
+
